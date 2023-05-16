@@ -28,7 +28,7 @@ const main = async () => {
               }
 
             const formattedValueWithCommas = addCommas(formattedValue);
-            console.log(`$${formattedValueWithCommas} Transferred`)
+            console.log(`$${formattedValueWithCommas} - Transferred`)
         }
     })
 
