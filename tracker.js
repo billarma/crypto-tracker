@@ -29,6 +29,13 @@ const main = async () => {
 
             const formattedValueWithCommas = addCommas(formattedValue);
             console.log(`$${formattedValueWithCommas} - Transferred`)
+            
+            fs.appendFile('transactions.txt', `Transaction: https://etherscan.io/tx/${data.transactionHash} - $${formattedValueWithCommas}\n`, (err) => {
+                if (err) {
+                  console.error('Error writing to file:', err);
+                  return;
+                }
+            })
         }
     })
 
