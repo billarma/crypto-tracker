@@ -9,8 +9,6 @@ function formatTimestamp(date) {
     return `[${hours}:${minutes}:${seconds}]`;
 }
 
-const timestamp = formatTimestamp(new Date());
-
 const provider = new ethers.providers.JsonRpcProvider('https://cloudflare-eth.com/');
 
 const contractAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
@@ -26,7 +24,8 @@ const main = async () => {
     console.log(`Whale Tracker Started, Large Transactions of ${name}`)
 
     contract.on('Transfer', (from, to, amount, data) => {
-        if(amount.toNumber() >= transferThreshold) {
+        if(amount.toNumber() >= transferThreshold) {  
+            const timestamp = formatTimestamp(new Date());
             
             console.log(`${timestamp} New Transaction: https://etherscan.io/tx/${data.transactionHash}`)
             const value = ethers.utils.parseUnits(`${amount}`, 0);
