@@ -1,5 +1,15 @@
 const { ethers, Contract } = require('ethers');
 const BigNumber = require('bignumber.js');
+const fs = require('fs');
+
+function formatTimestamp(date) {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `[${hours}:${minutes}:${seconds}]`;
+}
+
+const timestamp = formatTimestamp(new Date());
 
 const provider = new ethers.providers.JsonRpcProvider('https://cloudflare-eth.com/');
 
@@ -11,13 +21,14 @@ const contract = new ethers.Contract(contractAddress, contractABI, provider)
 
 const transferThreshold = 10000000000 //10,000 USDT (Minimum amount printed) 
 
-const main = async () => {
+const main = async () => {    
     const name = await new contract.name
     console.log(`Whale Tracker Started, Large Transactions of ${name}`)
 
     contract.on('Transfer', (from, to, amount, data) => {
         if(amount.toNumber() >= transferThreshold) {
-            console.log(`New Transaction: https://etherscan.io/tx/${data.transactionHash}`)
+            
+            console.log(`${timestamp} New Transaction: https://etherscan.io/tx/${data.transactionHash}`)
             const value = ethers.utils.parseUnits(`${amount}`, 0);
             const formattedValue = new BigNumber(ethers.utils.formatUnits(value, 6)).toFixed(0);
 
@@ -30,7 +41,7 @@ const main = async () => {
             const formattedValueWithCommas = addCommas(formattedValue);
             console.log(`$${formattedValueWithCommas} - Confirmed`)
             
-            fs.appendFile('transactions.txt', `Transaction: https://etherscan.io/tx/${data.transactionHash} - $${formattedValueWithCommas}\n`, (err) => {
+            fs.appendFile('transactions.txt', `${timestamp} Transaction: https://etherscan.io/tx/${data.transactionHash} - $${formattedValueWithCommas}\n`, (err) => {
                 if (err) {
                   console.error('Error writing to file:', err);
                   return;
@@ -38,7 +49,6 @@ const main = async () => {
             })
         }
     })
-
 }
 
 main()
