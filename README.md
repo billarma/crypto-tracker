@@ -3,7 +3,7 @@ Requirements:
 - npm install bignumber.js
 <hr>
 ~ Update: Results will be exported @ transactions.txt ✅ <br>
-~ Update(2): Timestamp ✅
+~ Update(2): Timestamp ✅ <br>
 ~ Update(3): Telegram Bot ✅
 <hr>
 Telegram Bot:
