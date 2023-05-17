@@ -7,6 +7,7 @@ Requirements:
 ~ Update(3): Telegram Bot ✅
 <hr>
 Telegram Bot: <br>
+
 - Run npm init -y to create a new package.json file. <br>
 - Install the node-telegram-bot-api library by running npm install node-telegram-bot-api in the terminal. <br>
 - Add this piece of code from tracker-telegram-bot.js file to the main code. <br>
